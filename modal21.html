@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Lightbox Modal</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; background: #07090e; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #06b6d4; color: white; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; }
+    .lightbox-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; flex-direction: column; z-index: 100; }
+    .lightbox-overlay.active { display: flex; }
+    .lightbox-img { max-width: 85%; max-height: 70vh; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+    .lightbox-caption { color: #cbd5e1; margin-top: 16px; font-size: 0.95rem; }
+    .close-btn { position: absolute; top: 24px; right: 28px; background: none; border: none; color: #fff; font-size: 32px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">🖼️ View Lightbox</button>
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="close-btn" onclick="toggle(false)">&times;</button>
+    <img class="lightbox-img" src="https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=900&auto=format&fit=crop&q=80" alt="Minimalist Art" />
+    <div class="lightbox-caption">Abstract Modern Aesthetics &bull; Photography &amp; Art Gallery</div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('lightbox').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

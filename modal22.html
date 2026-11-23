@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Step Wizard Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0c1017; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #6366f1; color: white; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .wizard-card { background: #161e2e; border: 1px solid #29354d; border-radius: 16px; padding: 32px; width: 90%; max-width: 460px; text-align: center; }
+    .steps-dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #334155; }
+    .dot.active { background: #6366f1; width: 24px; border-radius: 6px; }
+    h3 { color: #fff; font-size: 1.3rem; margin-bottom: 8px; }
+    p { color: #94a3b8; font-size: 0.9rem; line-height: 1.5; margin-bottom: 28px; }
+    .wizard-actions { display: flex; justify-content: space-between; gap: 12px; }
+    .btn-w { padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; }
+    .btn-next { background: #6366f1; color: white; flex: 1; }
+    .btn-back { background: #334155; color: white; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">🚀 Quick Onboarding</button>
+  <div class="modal-overlay" id="wizardModal">
+    <div class="wizard-card">
+      <div class="steps-dots">
+        <div class="dot active" id="dot1"></div>
+        <div class="dot" id="dot2"></div>
+        <div class="dot" id="dot3"></div>
+      </div>
+      <h3 id="stepTitle">Step 1: Create Workspace</h3>
+      <p id="stepDesc">Set up your workspace to collaborate seamlessly with your teammates and clients.</p>
+      <div class="wizard-actions">
+        <button class="btn-w btn-back" id="backBtn" onclick="prevStep()" style="display: none;">Back</button>
+        <button class="btn-w btn-next" id="nextBtn" onclick="nextStep()">Next &rarr;</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    let step = 1;
+    function toggle(v) { step = 1; update(); document.getElementById('wizardModal').classList.toggle('active', v); }
+    function nextStep() { if(step < 3) { step++; update(); } else { toggle(false); alert('Setup finished!'); } }
+    function prevStep() { if(step > 1) { step--; update(); } }
+    function update() {
+      const titles = ['Step 1: Create Workspace', 'Step 2: Invite Collaborators', 'Step 3: Launch Project'];
+      const descs = ['Set up your workspace to collaborate seamlessly.', 'Send invite links or add emails of your crew.', 'Ready! Start building your dream interface.'];
+      document.getElementById('stepTitle').innerText = titles[step-1];
+      document.getElementById('stepDesc').innerText = descs[step-1];
+      document.getElementById('dot1').classList.toggle('active', step === 1);
+      document.getElementById('dot2').classList.toggle('active', step === 2);
+      document.getElementById('dot3').classList.toggle('active', step === 3);
+      document.getElementById('backBtn').style.display = step > 1 ? 'block' : 'none';
+      document.getElementById('nextBtn').innerText = step === 3 ? 'Finish' : 'Next →';
+    }
+  </script>
+</body>
+</html>

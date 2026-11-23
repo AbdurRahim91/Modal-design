@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings & Preferences Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #0b0f19; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #475569; color: white; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .settings-box { background: #1a2233; border: 1px solid #2d3b56; border-radius: 16px; padding: 28px; width: 90%; max-width: 460px; }
+    h3 { color: #f8fafc; font-size: 1.25rem; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+    .setting-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #26334a; }
+    .setting-info h5 { color: #e2e8f0; font-size: 0.95rem; margin-bottom: 2px; }
+    .setting-info p { color: #94a3b8; font-size: 0.8rem; }
+    .toggle { position: relative; width: 44px; height: 24px; background: #334155; border-radius: 20px; cursor: pointer; }
+    .toggle.active { background: #3b82f6; }
+    .toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; background: white; border-radius: 50%; transition: 0.2s; }
+    .toggle.active::after { transform: translateX(20px); }
+    .btn-save { width: 100%; margin-top: 24px; padding: 12px; background: #3b82f6; color: white; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">⚙️ Open Preferences</button>
+  <div class="modal-overlay" id="settingsModal">
+    <div class="settings-box">
+      <h3>
+        Settings
+        <span style="font-size: 20px; cursor: pointer;" onclick="toggle(false)">&times;</span>
+      </h3>
+      <div class="setting-item">
+        <div class="setting-info">
+          <h5>Desktop Notifications</h5>
+          <p>Receive sound notifications on new events</p>
+        </div>
+        <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-info">
+          <h5>Two-Factor Authentication</h5>
+          <p>Protect account with authenticator app</p>
+        </div>
+        <div class="toggle" onclick="this.classList.toggle('active')"></div>
+      </div>
+      <div class="setting-item">
+        <div class="setting-info">
+          <h5>Public Profile</h5>
+          <p>Allow other developers to view projects</p>
+        </div>
+        <div class="toggle active" onclick="this.classList.toggle('active')"></div>
+      </div>
+      <button class="btn-save" onclick="toggle(false)">Save Preferences</button>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('settingsModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

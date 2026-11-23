@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Release Notes Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0c1017; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #3b82f6; color: white; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .changelog-box { background: #161e2e; border: 1px solid #283750; border-radius: 16px; padding: 30px; width: 90%; max-width: 480px; position: relative; }
+    .close-btn { position: absolute; top: 16px; right: 18px; background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; }
+    .ver-badge { background: rgba(59, 130, 246, 0.15); color: #60a5fa; font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 8px; }
+    h3 { color: #f8fafc; font-size: 1.25rem; margin-bottom: 12px; }
+    ul { list-style: none; margin-bottom: 24px; }
+    li { color: #cbd5e1; font-size: 0.88rem; margin-bottom: 10px; display: flex; gap: 8px; }
+    .btn-gotit { width: 100%; padding: 11px; background: #3b82f6; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">🚀 What's New v2.4</button>
+  <div class="modal-overlay" id="changelogModal">
+    <div class="changelog-box">
+      <button class="close-btn" onclick="toggle(false)">&times;</button>
+      <span class="ver-badge">Version 2.4.0 Released</span>
+      <h3>What's New in this Update</h3>
+      <ul>
+        <li>⚡ <strong>Performance:</strong> 40% faster modal rendering speed</li>
+        <li>🎨 <strong>Design:</strong> 20 brand-new customizable modal designs</li>
+        <li>♿ <strong>Accessibility:</strong> Full ARIA screen-reader compatibility</li>
+      </ul>
+      <button class="btn-gotit" onclick="toggle(false)">Awesome, Got It!</button>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('changelogModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

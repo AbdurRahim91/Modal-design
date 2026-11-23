@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Session Timeout Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #0c1017; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #f97316; color: white; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .session-card { background: #1a2233; border: 1px solid #334466; border-radius: 16px; padding: 32px; width: 90%; max-width: 420px; text-align: center; }
+    .timer-badge { font-size: 2.2rem; font-weight: 800; color: #fb923c; margin: 16px 0; font-family: monospace; }
+    h3 { color: #f8fafc; font-size: 1.25rem; }
+    p { color: #94a3b8; font-size: 0.88rem; line-height: 1.5; }
+    .btn-row { display: flex; gap: 10px; margin-top: 24px; }
+    .btn-out { flex: 1; padding: 10px; background: #334155; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .btn-keep { flex: 1; padding: 10px; background: #f97316; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">⏳ Timeout Warning</button>
+  <div class="modal-overlay" id="timeoutModal">
+    <div class="session-card">
+      <h3>Are You Still There?</h3>
+      <p>Due to inactivity, your secure session will expire soon to protect your personal account.</p>
+      <div class="timer-badge" id="countdown">02:59</div>
+      <div class="btn-row">
+        <button class="btn-out" onclick="toggle(false)">Log Out</button>
+        <button class="btn-keep" onclick="toggle(false)">Stay Signed In</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('timeoutModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

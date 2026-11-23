@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://codepen.io/stormwarning/pen/zGaRGQ.css">
+</head>
+<style>
+dialog {
+	--_duration: 200ms;
+
+	padding: 0;
+	background: none;
+	box-shadow: none;
+	transition: display var(--_duration) allow-discrete,
+		overlay var(--_duration) allow-discrete;
+
+	&::backdrop {
+		transition: opacity var(--_duration) var(--ease-out-3);
+		opacity: 0;
+		background-color: light-dark(#0003, #0008);
+		cursor: zoom-out;
+	}
+
+	&[open] {
+		&,
+		&::backdrop {
+			opacity: 1;
+		}
+
+		& > section {
+			opacity: 1;
+			scale: 1;
+			filter: blur(0px);
+		}
+	}
+
+	@starting-style {
+		&[open],
+		&[open]::backdrop {
+			opacity: 0;
+		}
+
+		&[open] > section {
+			opacity: 0;
+			scale: 0.95;
+			filter: blur(4px);
+		}
+	}
+
+	&.small {
+		inline-size: min(var(--size-content-1), 80vw);
+	}
+
+	&.medium {
+		inline-size: min(var(--size-content-2), 80vw);
+	}
+
+	&.large {
+		inline-size: min(var(--size-content-3), 80vw);
+	}
+}
+
+section {
+	padding: var(--size-2);
+	margin: var(--size-4);
+	border-radius: var(--radius-3);
+	background: light-dark(white, var(--surface-2));
+	box-shadow: var(--shadow-3);
+	opacity: 0;
+	scale: 0.95;
+	filter: blur(4px);
+	transition: var(--_duration) var(--ease-out-3);
+	transition-property: opacity, scale, filter;
+
+	p {
+		display: grid;
+		place-content: center;
+		aspect-ratio: 4/1;
+	}
+}
+
+header {
+	display: flex;
+	place-content: end;
+	padding: var(--size-2);
+}
+
+menu {
+	display: flex;
+	justify-content: center;
+	padding: var(--space-3);
+	margin: 0;
+}
+</style>
+<body>
+  <figure>
+    <button onclick="one.showModal()">Show dialog</button>
+  </figure>
+  
+  <dialog id="one" class="large">
+    <section>
+      <header>
+        <button title="Close" onclick="one.close()">×</button>
+      </header>
+      <p>Large dialog</p>
+      <footer>
+        <menu>
+          <button onclick="two.showModal()">Open</button>
+        </menu>
+      </footer>
+    </section>
+  </dialog>
+  
+  <dialog id="two" class="medium">
+    <section>
+      <header>
+        <button title="Close" onclick="two.close()">×</button>
+      </header>
+      <p>Medium dialog</p>
+      <footer>
+        <menu>
+          <button onclick="three.showModal()">Open</button>
+        </menu>
+      </footer>
+    </section>
+  </dialog>
+  
+  <dialog id="three" class="small">
+    <section>
+      <header>
+        <button title="Close" onclick="three.close()">×</button>
+      </header>
+      <p>Small dialog</p>
+      <footer>
+        <menu>
+          <button onclick="three.close()">Ok</button>
+        </menu>
+      </footer>
+    </section>
+  </dialog> 
+  <script>
+  const lightDismiss = ({ target: dialog }) => {
+	if (dialog.nodeName === "DIALOG") dialog.close("dismiss");
+};
+
+one.addEventListener("click", lightDismiss);
+two.addEventListener("click", lightDismiss);
+three.addEventListener("click", lightDismiss);
+
+
+  </script>
+</body>
+</html>

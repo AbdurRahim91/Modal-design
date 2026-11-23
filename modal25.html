@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout Summary Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0c0f17; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #10b981; color: white; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .cart-box { background: #161e2e; border: 1px solid #283750; border-radius: 16px; padding: 28px; width: 90%; max-width: 440px; position: relative; }
+    .close-btn { position: absolute; top: 16px; right: 18px; background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; }
+    h3 { color: #f8fafc; font-size: 1.25rem; margin-bottom: 16px; }
+    .item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #222d42; color: #cbd5e1; font-size: 0.9rem; }
+    .total-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; color: #fff; font-size: 1.1rem; font-weight: 700; }
+    .btn-pay { width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">🛒 View Cart ($98)</button>
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="cart-box">
+      <button class="close-btn" onclick="toggle(false)">&times;</button>
+      <h3>Order Overview</h3>
+      <div class="item-row">
+        <span>UI Component Library Pro</span>
+        <strong>$69.00</strong>
+      </div>
+      <div class="item-row">
+        <span>Priority Support License</span>
+        <strong>$29.00</strong>
+      </div>
+      <div class="total-row">
+        <span>Total Due</span>
+        <span style="color: #34d399;">$98.00</span>
+      </div>
+      <button class="btn-pay" onclick="alert('Payment Successful!'); toggle(false);">Complete Purchase</button>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('checkoutModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

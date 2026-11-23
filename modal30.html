@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #0c1017; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #64748b; color: white; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .terms-box { background: #161e2e; border: 1px solid #283750; border-radius: 16px; padding: 28px; width: 90%; max-width: 520px; }
+    h3 { color: #f8fafc; font-size: 1.25rem; margin-bottom: 12px; }
+    .terms-content { height: 180px; overflow-y: auto; background: #0c121d; border: 1px solid #233147; border-radius: 8px; padding: 14px; color: #94a3b8; font-size: 0.82rem; line-height: 1.6; margin-bottom: 16px; }
+    .agree-check { display: flex; align-items: center; gap: 8px; color: #cbd5e1; font-size: 0.85rem; margin-bottom: 20px; cursor: pointer; }
+    .btn-agree { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">📜 Terms of Service</button>
+  <div class="modal-overlay" id="termsModal">
+    <div class="terms-box">
+      <h3>Terms &amp; Conditions</h3>
+      <div class="terms-content">
+        <p>1. Acceptance: By using this software, you agree to comply with all applicable copyright and intellectual property laws.</p><br>
+        <p>2. User Content: You retain ownership of any media, styles, or code you create and publish using our tools.</p><br>
+        <p>3. Warranties: The service is provided 'as is' without guarantees of any specific uptime or operational warranty.</p>
+      </div>
+      <label class="agree-check">
+        <input type="checkbox" id="checkAgree" />
+        <span>I have read and agree to the Terms &amp; Conditions</span>
+      </label>
+      <button class="btn-agree" onclick="if(document.getElementById('checkAgree').checked){ alert('Accepted!'); toggle(false); } else { alert('Please check the agreement box.'); }">Accept &amp; Continue</button>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('termsModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

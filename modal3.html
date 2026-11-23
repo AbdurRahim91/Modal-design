@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+</head>
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+.btn {
+  align-items: center;
+  border: none;
+  border-radius: 0.5rem;
+  display: flex;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(1.25rem, 4vw, 2rem);
+  justify-content: center;
+  padding: 0.5rem 1.5rem;
+  position: relative;
+  text-transform: uppercase;
+  width: auto;
+  white-space: nowrap;
+}
+
+.btn .bi {
+  line-height: 1;
+  padding-left: 1rem;
+  vertical-align: middle;
+}
+
+.btn-primary,
+.btn-primary:active,
+.btn-primary:focus {
+  background-color: hsla(57, 100%, 50%, 1);
+  color: hsla(212, 100%, 33%, 1);
+}
+
+.btn-primary:hover {
+  background-color: hsla(210, 100%, 40%, 1);
+  color: hsla(0, 0%, 100%, 1);
+}
+
+.icon-wrapper {
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.modal-title {
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.modal-title span {
+  color: hsla(357, 92%, 47%, 1);
+}
+
+.video-container {
+  border-radius: 0.35rem;
+  overflow: hidden;
+  padding-bottom: 56.25%;
+  position: relative;
+}
+
+.video-container iframe {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.video {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+</style>
+<body>
+    <!-- The call -->
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center mt-5">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoModal">
+        Watch Video <span class="icon-wrapper"><i class="bi bi-youtube"></i></span>
+      </button>
+    </div>
+  </div>
+  <!-- ./ -->
+  
+  <!-- The modal -->
+  <div class="modal fade video-modal" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title" id="videoModalLabel">
+            Video <span>Title</span>
+          </h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="video-container">
+            <iframe class="video no-border" id="videoIframe" src="https://www.youtube.com/embed/WbBGLPNXVjo" allow="accelerometer; autoplay; encrypted-media; gyroscope;" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+  <!-- ./ -->
+   <script>
+    // Stop the video when the modal is closed
+document
+  .getElementById("videoModal")
+  .addEventListener("hide.bs.modal", function () {
+    var iframe = document.getElementById("videoIframe");
+    iframe.src = iframe.src; // Reset the iframe src to stop the video
+  });
+
+   </script>
+</body>
+</html>

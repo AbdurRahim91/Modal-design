@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modal Design Gallery &amp; Code Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #111827;
+      --card-border: #1f293d;
+      --card-hover-border: #3b82f6;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #10b981;
+      --code-bg: #080c14;
+      --header-gradient: linear-gradient(135deg, #60a5fa 0%, #a855f7 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(17, 24, 39, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--card-border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding: 1.25rem 2rem;
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo-area h1 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--header-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-area p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: var(--code-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 9999px;
+      padding: 0.5rem 1rem;
+      width: 320px;
+      max-width: 100%;
+      transition: border-color 0.2s;
+    }
+
+    .search-bar:focus-within {
+      border-color: var(--primary);
+    }
+
+    .search-bar input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #fff;
+      font-size: 0.875rem;
+      width: 100%;
+      margin-left: 0.5rem;
+    }
+
+    .badge-count {
+      background: #1e293b;
+      color: #93c5fd;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      font-weight: 600;
+    }
+
+    main {
+      flex: 1;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2.5rem 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+      gap: 2rem;
+    }
+
+    @media (max-width: 640px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      header {
+        padding: 1rem;
+      }
+      main {
+        padding: 1.5rem 1rem;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--card-hover-border);
+      box-shadow: 0 12px 30px -4px rgba(59, 130, 246, 0.2);
+    }
+
+    .card-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .card-title-group h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #f9fafb;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-filename {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: #60a5fa;
+      background: rgba(59, 130, 246, 0.1);
+      padding: 0.15rem 0.5rem;
+      border-radius: 0.375rem;
+      display: inline-block;
+    }
+
+    .card-body {
+      padding: 1.25rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .preview-frame-container {
+      width: 100%;
+      height: 250px;
+      border-radius: 0.625rem;
+      overflow: hidden;
+      background: #1e293b;
+      border: 1px solid #2d3748;
+      position: relative;
+    }
+
+    .preview-frame-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: #ffffff;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: auto;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      border: none;
+      transition: all 0.18s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-hover);
+    }
+
+    .btn-secondary {
+      background: #1f293d;
+      color: #e5e7eb;
+      border: 1px solid #374151;
+    }
+
+    .btn-secondary:hover {
+      background: #2b3952;
+      color: #fff;
+      border-color: #4b5563;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-outline:hover {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: #60a5fa;
+    }
+
+    .copy-success {
+      background: #059669 !important;
+      color: white !important;
+    }
+
+    /* Modal for viewing code */
+    .code-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .code-modal-overlay.active {
+      display: flex;
+    }
+
+    .code-modal-window {
+      background: #0e131f;
+      border: 1px solid #2d3748;
+      border-radius: 1rem;
+      width: 100%;
+      max-width: 900px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+
+    .code-modal-header {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #1f293d;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .code-modal-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #f3f4f6;
+    }
+
+    .code-modal-close {
+      background: transparent;
+      border: none;
+      color: #9ca3af;
+      font-size: 1.5rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0.25rem;
+      border-radius: 0.25rem;
+    }
+
+    .code-modal-close:hover {
+      color: #fff;
+    }
+
+    .code-modal-body {
+      padding: 1rem 1.5rem;
+      overflow: auto;
+      flex: 1;
+      background: var(--code-bg);
+    }
+
+    .code-modal-body pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.825rem;
+      line-height: 1.6;
+      color: #d1d5db;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .code-modal-footer {
+      padding: 0.875rem 1.5rem;
+      border-top: 1px solid #1f293d;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    /* Toast Feedback */
+    .toast-feedback {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #10b981;
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px -5px rgba(16, 185, 129, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 200;
+      opacity: 0;
+      transform: translateY(20px);
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast-feedback.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-top: auto;
+    }
+  
+    /* Live Centered Modal Preview Overlay */
+    .live-preview-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      animation: fadeInPreview 0.2s ease;
+    }
+
+    .live-preview-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeInPreview {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .live-preview-container {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 1.25rem;
+      width: 100%;
+      max-width: 950px;
+      height: 82vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.8), 0 0 40px rgba(59, 130, 246, 0.15);
+      overflow: hidden;
+      transform: scale(0.97);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .live-preview-overlay.active .live-preview-container {
+      transform: scale(1);
+    }
+
+    .live-preview-topbar {
+      padding: 0.9rem 1.5rem;
+      background: #162032;
+      border-bottom: 1px solid #27354f;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .live-preview-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .live-preview-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .live-preview-iframe {
+      width: 100%;
+      flex: 1;
+      border: none;
+      display: block;
+      background: #0a0e17;
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="logo-area">
+        <h1>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          Modal Design Hub
+        </h1>
+        <p>Interactive collection of modern HTML &amp; CSS modal designs with live previews and copyable code</p>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <div class="search-bar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="searchInput" placeholder="Search modals by name or description..." oninput="filterModals()" />
+        </div>
+        <span class="badge-count" id="totalCount">31 Designs</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="grid" id="modalGrid">
+      <div class="card" data-name="classic centered modal modal1.html clean and minimalist standard modal popup with overlay backdrop and close button, great for welcome messages or simple alerts.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Classic Centered Modal</h2>
+            <span class="card-filename">modal1.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Clean and minimalist standard modal popup with overlay backdrop and close button, great for welcome messages or simple alerts.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal1.html" title="Classic Centered Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(0, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(0)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(1, \'modal1.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="sleek glassmorphic modal modal2.html modern ui card modal with smooth transitions, gradient accents, decorative header icon, and call-to-action button.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Sleek Glassmorphic Modal</h2>
+            <span class="card-filename">modal2.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Modern UI card modal with smooth transitions, gradient accents, decorative header icon, and call-to-action button.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal2.html" title="Sleek Glassmorphic Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(1, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(1)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(2, \'modal2.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="video player lightbox modal modal3.html responsive multimedia video lightbox modal dialog designed for embedding youtube/html5 video players.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Video Player Lightbox Modal</h2>
+            <span class="card-filename">modal3.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Responsive multimedia video lightbox modal dialog designed for embedding YouTube/HTML5 video players.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal3.html" title="Video Player Lightbox Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(2, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(2)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(3, \'modal3.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="alert dialog modal modal4.html standard confirmation & alert dialog window with custom title bar, dismiss icon, and action button.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Alert Dialog Modal</h2>
+            <span class="card-filename">modal4.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Standard confirmation &amp; alert dialog window with custom title bar, dismiss icon, and action button.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal4.html" title="Alert Dialog Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(3, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(3)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(4, \'modal4.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="accessible wai-aria form modal modal5.html fully accessible modal dialog adhering to aria standards, focus management, form inputs, and keyboard navigation.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Accessible WAI-ARIA Form Modal</h2>
+            <span class="card-filename">modal5.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Fully accessible modal dialog adhering to ARIA standards, focus management, form inputs, and keyboard navigation.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal5.html" title="Accessible WAI-ARIA Form Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(4, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(4)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(5, \'modal5.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="notification toast with progress bar modal6.html toast-style notification / banner modal featuring a dynamic countdown timer and auto-closing progress bar.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Notification Toast with Progress Bar</h2>
+            <span class="card-filename">modal6.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Toast-style notification / banner modal featuring a dynamic countdown timer and auto-closing progress bar.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal6.html" title="Notification Toast with Progress Bar" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(5, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(5)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(6, \'modal6.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="playful interactive modal modal7.html animated popup modal with interactive toggle trigger and smooth fade & scale css entrance effects.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Playful Interactive Modal</h2>
+            <span class="card-filename">modal7.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Animated popup modal with interactive toggle trigger and smooth fade &amp; scale CSS entrance effects.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal7.html" title="Playful Interactive Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(6, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(6)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(7, \'modal7.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="pure css target modal modal8.html zero-javascript modal implementation powered entirely by css :target pseudo-class and hash navigation.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Pure CSS Target Modal</h2>
+            <span class="card-filename">modal8.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Zero-JavaScript modal implementation powered entirely by CSS :target pseudo-class and hash navigation.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal8.html" title="Pure CSS Target Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(7, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(7)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(8, \'modal8.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="modern native <dialog> modal modal9.html built using the modern html5 <dialog> element, featuring native backdrop styling and sleek css transitions.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Modern Native &lt;dialog&gt; Modal</h2>
+            <span class="card-filename">modal9.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Built using the modern HTML5 &lt;dialog&gt; element, featuring native backdrop styling and sleek CSS transitions.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal9.html" title="Modern Native &lt;dialog&gt; Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(8, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(8)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(9, \'modal9.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="swipeable bottom drawer sheet modal10.html advanced mobile-friendly bottom sheet drawer modal with gesture dragging, physics-based slide animation, and smooth controls.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Swipeable Bottom Drawer Sheet</h2>
+            <span class="card-filename">modal10.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Advanced mobile-friendly bottom sheet drawer modal with gesture dragging, physics-based slide animation, and smooth controls.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal10.html" title="Swipeable Bottom Drawer Sheet" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(9, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(9)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(10, \'modal10.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="multi-animation modal showcase modal11.html showcase of diverse css keyframe entrance & exit animations (unfold, zoom, blow up, slip, and sketch).">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Multi-Animation Modal Showcase</h2>
+            <span class="card-filename">modal11.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Showcase of diverse CSS keyframe entrance &amp; exit animations (unfold, zoom, blow up, slip, and sketch).</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal11.html" title="Multi-Animation Modal Showcase" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(10, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(10)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(11, \'modal11.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="newsletter subscription popup modal12.html modern newsletter subscription modal with gradient badge, input validation, and privacy notice.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Newsletter Subscription Popup</h2>
+            <span class="card-filename">modal12.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Modern newsletter subscription modal with gradient badge, input validation, and privacy notice.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal12.html" title="Newsletter Subscription Popup" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(11, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(11)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(12, \'modal12.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="promo coupon & discount popup modal13.html e-commerce discount popup with click-to-copy promo code and countdown deal banner.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Promo Coupon &amp; Discount Popup</h2>
+            <span class="card-filename">modal13.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">E-commerce discount popup with click-to-copy promo code and countdown deal banner.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal13.html" title="Promo Coupon &amp; Discount Popup" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(12, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(12)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(13, \'modal13.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="cookie & gdpr consent modal modal14.html clean gdpr compliant cookie preferences dialog with customizable toggles and accept buttons.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Cookie &amp; GDPR Consent Modal</h2>
+            <span class="card-filename">modal14.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Clean GDPR compliant cookie preferences dialog with customizable toggles and accept buttons.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal14.html" title="Cookie &amp; GDPR Consent Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(13, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(13)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(14, \'modal14.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="star rating & csat feedback modal modal15.html interactive feedback dialog with 5-star rating selector, feedback category tags, and comments.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Star Rating &amp; CSAT Feedback Modal</h2>
+            <span class="card-filename">modal15.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Interactive feedback dialog with 5-star rating selector, feedback category tags, and comments.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal15.html" title="Star Rating &amp; CSAT Feedback Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(14, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(14)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(15, \'modal15.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="danger zone delete confirmation modal modal16.html high-priority delete / danger confirmation dialog with warning icon and safeguards.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Danger Zone Delete Confirmation Modal</h2>
+            <span class="card-filename">modal16.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">High-priority delete / danger confirmation dialog with warning icon and safeguards.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal16.html" title="Danger Zone Delete Confirmation Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(15, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(15)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(16, \'modal16.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="drag & drop file upload modal modal17.html multi-file uploader dialog with drag-and-drop zone, file size indicator, and upload progress bar.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Drag &amp; Drop File Upload Modal</h2>
+            <span class="card-filename">modal17.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Multi-file uploader dialog with drag-and-drop zone, file size indicator, and upload progress bar.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal17.html" title="Drag &amp; Drop File Upload Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(16, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(16)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(17, \'modal17.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="authentication & login modal modal18.html modern login popup with social sign-in buttons (google, github), email fields, and password toggles.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Authentication &amp; Login Modal</h2>
+            <span class="card-filename">modal18.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Modern login popup with social sign-in buttons (Google, GitHub), email fields, and password toggles.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal18.html" title="Authentication &amp; Login Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(17, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(17)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(18, \'modal18.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="saas pricing plan comparison modal modal19.html interactive subscription pricing tier modal with monthly/annual switch and highlighted popular tier.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>SaaS Pricing Plan Comparison Modal</h2>
+            <span class="card-filename">modal19.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Interactive subscription pricing tier modal with monthly/annual switch and highlighted popular tier.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal19.html" title="SaaS Pricing Plan Comparison Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(18, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(18)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(19, \'modal19.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="user account & app preferences modal modal20.html sleek tabbed configuration modal with toggle switches, dark mode selectors, and notifications.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>User Account &amp; App Preferences Modal</h2>
+            <span class="card-filename">modal20.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Sleek tabbed configuration modal with toggle switches, dark mode selectors, and notifications.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal20.html" title="User Account &amp; App Preferences Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(19, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(19)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(20, \'modal20.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="fullscreen image lightbox modal modal21.html responsive media lightbox dialog with high-definition image showcase, caption, and zoom toggle.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Fullscreen Image Lightbox Modal</h2>
+            <span class="card-filename">modal21.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Responsive media lightbox dialog with high-definition image showcase, caption, and zoom toggle.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal21.html" title="Fullscreen Image Lightbox Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(20, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(20)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(21, \'modal21.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="multi-step onboarding wizard modal modal22.html interactive 3-step walkthrough modal with indicator dots, dynamic step content, and next/prev buttons.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Multi-Step Onboarding Wizard Modal</h2>
+            <span class="card-filename">modal22.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Interactive 3-step walkthrough modal with indicator dots, dynamic step content, and Next/Prev buttons.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal22.html" title="Multi-Step Onboarding Wizard Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(21, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(21)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(22, \'modal22.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="social share & link copy modal modal23.html social network sharing popup with copy link shortcut and twitter, linkedin, whatsapp icons.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Social Share &amp; Link Copy Modal</h2>
+            <span class="card-filename">modal23.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Social network sharing popup with copy link shortcut and Twitter, LinkedIn, WhatsApp icons.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal23.html" title="Social Share &amp; Link Copy Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(22, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(22)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(23, \'modal23.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="session timeout & inactivity modal modal24.html security session expiration warning dialog with live remaining countdown timer and keep alive action.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Session Timeout &amp; Inactivity Modal</h2>
+            <span class="card-filename">modal24.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Security session expiration warning dialog with live remaining countdown timer and Keep Alive action.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal24.html" title="Session Timeout &amp; Inactivity Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(23, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(23)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(24, \'modal24.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="quick checkout & order summary modal modal25.html e-commerce checkout modal with item summary, total price calculation, and payment trigger.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Quick Checkout &amp; Order Summary Modal</h2>
+            <span class="card-filename">modal25.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">E-commerce checkout modal with item summary, total price calculation, and payment trigger.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal25.html" title="Quick Checkout &amp; Order Summary Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(24, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(24)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(25, \'modal25.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="quick command palette (cmd+k) modal modal26.html spotlight-style command bar modal with instant keyboard shortcut filtering and menu shortcuts.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Quick Command Palette (Cmd+K) Modal</h2>
+            <span class="card-filename">modal26.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Spotlight-style command bar modal with instant keyboard shortcut filtering and menu shortcuts.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal26.html" title="Quick Command Palette (Cmd+K) Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(25, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(25)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(26, \'modal26.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="team member invitation modal modal27.html collaboration invitation popup with email inputs, role permission selector (admin, editor, viewer).">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Team Member Invitation Modal</h2>
+            <span class="card-filename">modal27.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Collaboration invitation popup with email inputs, role permission selector (Admin, Editor, Viewer).</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal27.html" title="Team Member Invitation Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(26, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(26)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(27, \'modal27.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="2fa security code verification modal modal28.html two-factor authentication code entry popup with 6-digit input slots and auto-submit.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>2FA Security Code Verification Modal</h2>
+            <span class="card-filename">modal28.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Two-factor authentication code entry popup with 6-digit input slots and auto-submit.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal28.html" title="2FA Security Code Verification Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(27, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(27)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(28, \'modal28.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="release notes & changelog modal modal29.html product update modal displaying version badges, bulleted features list, and roadmap preview.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Release Notes &amp; Changelog Modal</h2>
+            <span class="card-filename">modal29.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Product update modal displaying version badges, bulleted features list, and roadmap preview.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal29.html" title="Release Notes &amp; Changelog Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(28, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(28)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(29, \'modal29.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="terms of service agreement modal modal30.html scrollable legal terms popup with an "i agree" checkbox toggle and acceptance cta button.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Terms of Service Agreement Modal</h2>
+            <span class="card-filename">modal30.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Scrollable legal terms popup with an &quot;I Agree&quot; checkbox toggle and acceptance CTA button.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal30.html" title="Terms of Service Agreement Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(29, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(29)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(30, \'modal30.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="card" data-name="floating help center & support modal modal31.html customer support modal with live chat launcher, faqs shortcut, and message ticket submission.">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2>Floating Help Center &amp; Support Modal</h2>
+            <span class="card-filename">modal31.html</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <p class="card-desc">Customer support modal with live chat launcher, FAQs shortcut, and message ticket submission.</p>
+          
+          <div class="preview-frame-container">
+            <iframe src="modal31.html" title="Floating Help Center &amp; Support Modal" loading="lazy"></iframe>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" onclick="copyModalCode(30, this)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+              Copy Code
+            </button>
+            <button class="btn btn-secondary" onclick="viewCodeModal(30)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              View Code
+            </button>
+            <button class="btn btn-outline" onclick="openLivePreviewModal(31, \'modal31.html\')" title="Open live popup centered on screen">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Modal Design Hub &bull; All 31 HTML/CSS Modal Components &bull; Ready to Use</p>
+  </footer>
+
+  <!-- Code Viewer Modal -->
+  <div class="code-modal-overlay" id="codeModalOverlay" onclick="handleOverlayClick(event)">
+    <div class="code-modal-window">
+      <div class="code-modal-header">
+        <div>
+          <div class="code-modal-title" id="codeModalTitle">Modal Code</div>
+          <span class="card-filename" id="codeModalFile" style="margin-top: 0.25rem;"></span>
+        </div>
+        <button class="code-modal-close" onclick="closeCodeModal()" aria-label="Close dialog">&times;</button>
+      </div>
+      <div class="code-modal-body">
+        <pre><code id="codeModalContent"></code></pre>
+      </div>
+      <div class="code-modal-footer">
+        <button class="btn btn-secondary" onclick="closeCodeModal()">Close</button>
+        <button class="btn btn-primary" id="modalCopyBtn" onclick="copyActiveModalCode()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          Copy All Code
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Feedback -->
+  <div class="toast-feedback" id="toastFeedback">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+    <span>Code copied to clipboard!</span>
+  </div>
+
+  <!-- Raw Safe JSON Data Payload -->
+  <script src="modals-data.js"></script>
+  <script>
+    let currentActiveIdx = null;
+
+    function showToast(message) {
+      const toast = document.getElementById('toastFeedback');
+      toast.querySelector('span').innerText = message || 'Code copied to clipboard!';
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    function copyModalCode(index, btnElem) {
+      const code = modalsData[index].code;
+      navigator.clipboard.writeText(code).then(() => {
+        showToast('Copied ' + modalsData[index].filename + ' code!');
+        if (btnElem) {
+          const originalHtml = btnElem.innerHTML;
+          btnElem.classList.add('copy-success');
+          btnElem.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!';
+          setTimeout(() => {
+            btnElem.classList.remove('copy-success');
+            btnElem.innerHTML = originalHtml;
+          }, 2000);
+        }
+      }).catch(err => {
+        console.error('Copy failed: ', err);
+      });
+    }
+
+    function viewCodeModal(index) {
+      currentActiveIdx = index;
+      const modal = modalsData[index];
+      document.getElementById('codeModalTitle').innerText = modal.title;
+      document.getElementById('codeModalFile').innerText = modal.filename;
+      document.getElementById('codeModalContent').textContent = modal.code;
+      document.getElementById('codeModalOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCodeModal() {
+      document.getElementById('codeModalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+      currentActiveIdx = null;
+    }
+
+    function handleOverlayClick(event) {
+      if (event.target === document.getElementById('codeModalOverlay')) {
+        closeCodeModal();
+      }
+    }
+
+    function copyActiveModalCode() {
+      if (currentActiveIdx !== null) {
+        copyModalCode(currentActiveIdx, document.getElementById('modalCopyBtn'));
+      }
+    }
+
+    function filterModals() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const cards = document.querySelectorAll('.card');
+      let visible = 0;
+      cards.forEach(card => {
+        const text = card.getAttribute('data-name');
+        if (!query || text.includes(query)) {
+          card.style.display = 'flex';
+          visible++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+      document.getElementById('totalCount').innerText = visible + ' Designs';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('codeModalOverlay').classList.contains('active')) {
+        closeCodeModal();
+      }
+    });
+  </script>
+
+  <!-- Live Centered Body Modal Preview Window -->
+  <div class="live-preview-overlay" id="livePreviewOverlay" onclick="handlePreviewOverlayClick(event)">
+    <div class="live-preview-container">
+      <div class="live-preview-topbar">
+        <div class="live-preview-title">
+          <span id="previewModalTitle">Modal Preview</span>
+          <span class="card-filename" id="previewModalFilename"></span>
+        </div>
+        <div class="live-preview-actions">
+          <a id="previewOpenTabBtn" href="#" target="_blank" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Full Window
+          </a>
+          <button class="code-modal-close" onclick="closeLivePreviewModal()" aria-label="Close Preview">&times;</button>
+        </div>
+      </div>
+      <iframe class="live-preview-iframe" id="livePreviewIframe" src="about:blank"></iframe>
+    </div>
+  </div>
+
+</body>
+</html>

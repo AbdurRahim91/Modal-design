@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter Subscription Popup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #0f172a; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: linear-gradient(135deg, #6366f1, #a855f7); color: #fff; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 100; opacity: 0; transition: opacity 0.3s ease; }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-box { background: #1e293b; border: 1px solid #334155; width: 90%; max-width: 440px; border-radius: 16px; padding: 32px 28px; text-align: center; position: relative; transform: translateY(20px); transition: transform 0.3s ease; }
+    .modal-overlay.active .modal-box { transform: translateY(0); }
+    .close-btn { position: absolute; top: 16px; right: 16px; background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; }
+    .icon-badge { width: 56px; height: 56px; border-radius: 14px; background: rgba(99, 102, 241, 0.15); color: #818cf8; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 26px; }
+    h3 { color: #f8fafc; font-size: 1.35rem; margin-bottom: 8px; font-weight: 700; }
+    p { color: #94a3b8; font-size: 0.9rem; line-height: 1.5; margin-bottom: 22px; }
+    .input-group { display: flex; gap: 8px; }
+    .input-group input { flex: 1; padding: 12px 16px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 0.9rem; outline: none; }
+    .input-group input:focus { border-color: #6366f1; }
+    .btn-submit { padding: 12px 20px; background: #6366f1; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .note { font-size: 0.75rem; color: #64748b; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggleModal(true)">📬 Subscribe Newsletter</button>
+  <div class="modal-overlay" id="newsletterModal">
+    <div class="modal-box">
+      <button class="close-btn" onclick="toggleModal(false)">&times;</button>
+      <div class="icon-badge">✨</div>
+      <h3>Stay Updated</h3>
+      <p>Join over 15,000+ creators getting weekly design tips, templates, and free resources.</p>
+      <div class="input-group">
+        <input type="email" placeholder="Enter your email" required />
+        <button class="btn-submit" onclick="alert('Subscribed successfully!'); toggleModal(false);">Join</button>
+      </div>
+      <div class="note">🔒 We respect your privacy. No spam ever.</div>
+    </div>
+  </div>
+  <script>
+    function toggleModal(open) {
+      document.getElementById('newsletterModal').classList.toggle('active', open);
+    }
+  </script>
+</body>
+</html>

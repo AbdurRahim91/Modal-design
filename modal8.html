@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  font-family: Arial;
+}
+
+body {
+  margin: 0;
+  padding: 2rem;
+  color: #333333;
+  background-color: #0093e9;
+  background-image: linear-gradient(-30deg, #0093e9 0%, #80d0c7 100%);
+  min-height: 100vh;
+  text-align: center;
+}
+
+main {
+  padding: 1.25rem;
+}
+main a:not(.btn) {
+  text-align: center;
+  display: block;
+  margin-top: 2em;
+  color: #333;
+}
+main a:not(.btn):hover {
+  color: #666;
+}
+
+.modal-window {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-window:target {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.modal-window .modal-backdrop {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.5);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0;
+}
+.modal-window .modal {
+  width: 20rem;
+  padding: 2em;
+  background: white;
+  position: relative;
+  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 0.5rem;
+}
+.modal-window .modal-close {
+  color: #aaa;
+  font-size: 80%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  text-align: center;
+  text-decoration: none;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+}
+
+.btn {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  display: inline-block;
+  font-size: inherit;
+  color: inherit;
+  background: #F5F5F5;
+  text-decoration: none;
+  border: solid 1px #F5F5F5;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  margin: 0 auto;
+  min-width: 5rem;
+  max-width: 10rem;
+  cursor: pointer;
+}
+.btn:hover, .btn:focus {
+  background: rgba(255, 255, 255, 0.5);
+}</style>
+<body>
+  <main>
+    <a class="btn" href="#open-modal">Open Modal</a>
+    
+    <div id="open-modal" class="modal-window">
+      <a href="#" class="modal-backdrop"></a>
+      <div class="modal">
+        <a href="#" title="Close" class="modal-close">✖</a>
+        <p>Modal Window</p>
+       <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam corrupti magni quia consequuntur iure distinctio ipsam autem. Perferendis in, quasi eius tempore repellat alias quo eveniet ullam commodi, maiores qui.</p>
+      </div>
+    </div>
+    
+  
+  </main>  
+  <script>
+    const open = document.getElementById("open_modal_button");
+const modal_container = document.getElementById("modal_container");
+const close = document.getElementById("close_modal_button");
+
+open_modal_button.addEventListener("click", () => {
+  modal_container.classList.add("show");
+});
+
+close_modal_button.addEventListener("click", () => {
+  modal_container.classList.remove("show");
+});
+
+  </script>
+</body>
+</html>

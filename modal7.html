@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /* Font Import */
+@import url("https://fonts.googleapis.com/css?family=Poppins&display=swap");
+
+/* Global Setting */
+/* include border and padding in the total width and height calculations of UI objects */
+* {
+  box-sizing: border-box;
+}
+
+/* Body Settimgs */
+body {
+  background-color: #edeef6; /* grayish color */
+  font-family: "Poppins", sans-serif;
+  /* Center modal trigger */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Dimensioning of modal trigger */
+  min-height: 100vh; /* =100% of viewport height */
+  margin: 0;
+}
+
+/* Button styling */
+.modal-button {
+  background-color: #47a386;
+  border: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* box shadow to add depth */
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 25px;
+}
+
+/* Open Modal Container/Wrapper Full-screen */
+.modal-container {
+  background-color: rgba(0, 0, 0, 0.3);
+  /* Center modal container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  opacity: 0; /* to be hidden by default */
+  pointer-events: none; /* so we can click the modal trigger */
+  top: 0;
+  left: 0;
+  height: 100vh; /* =100% of viewport height */
+  width: 100vw; /* = 100% of viewport width */
+  transition: opacity 0.3s ease;
+}
+
+/* Activate the class that we used in JS for the Event Listeners of modal's open and close button */
+.modal-container.show {
+  pointer-events: auto; /* set back the default value */
+  opacity: 1;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* box shadow to add depth */
+  padding: 30px 50px;
+  width: 600px;
+  max-width: 100%; /* Assures that it' ll be kept inside the browser width */
+  text-align: center;
+}
+
+.modal-content h1 {
+  margin: 0;
+}
+
+.modal-content p {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Remove Modal at First */
+.modal_container {
+  display: none;
+}
+
+</style>
+<body>
+    <!-- Modal Trigger -->
+<button class="modal-button" id="open_modal_button">
+    Click me please
+  </button>
+  
+  <!-- Modal Container -->
+  <div class="modal-container" id="modal_container">
+    <!-- Modal - White Box Wrapper -->
+    <div class="modal-content">
+      <h1> Modals are cool! </h1>
+      <p> Lorem50....</p>
+      <!-- Modal Close Button -->
+      <button class="modal-button" id="close_modal_button">
+        Close me
+      </button>
+    </div>
+  </div>
+  <script>
+    const open = document.getElementById("open_modal_button");
+const modal_container = document.getElementById("modal_container");
+const close = document.getElementById("close_modal_button");
+
+open_modal_button.addEventListener("click", () => {
+  modal_container.classList.add("show");
+});
+
+close_modal_button.addEventListener("click", () => {
+  modal_container.classList.remove("show");
+});
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Palette Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #0b0f19; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #3b82f6; color: white; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: flex-start; justify-content: center; padding-top: 15vh; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .cmd-box { background: #161e2e; border: 1px solid #2d3b55; border-radius: 14px; width: 90%; max-width: 540px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); overflow: hidden; }
+    .cmd-input { width: 100%; padding: 16px 20px; background: transparent; border: none; border-bottom: 1px solid #243147; color: white; font-size: 1rem; outline: none; }
+    .cmd-list { list-style: none; padding: 8px; }
+    .cmd-item { padding: 10px 14px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; color: #cbd5e1; font-size: 0.9rem; cursor: pointer; }
+    .cmd-item:hover { background: #25334c; color: white; }
+    .cmd-shortcut { font-size: 0.75rem; background: #0f1624; border: 1px solid #283750; padding: 2px 8px; border-radius: 4px; color: #94a3b8; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">⌘ Command Palette</button>
+  <div class="modal-overlay" id="cmdModal" onclick="if(event.target === this) toggle(false)">
+    <div class="cmd-box">
+      <input type="text" class="cmd-input" placeholder="Type a command or search..." autofocus />
+      <ul class="cmd-list">
+        <li class="cmd-item" onclick="toggle(false)"><span>🔍 Search Components</span><span class="cmd-shortcut">⌘ S</span></li>
+        <li class="cmd-item" onclick="toggle(false)"><span>📂 Open Recent Files</span><span class="cmd-shortcut">⌘ O</span></li>
+        <li class="cmd-item" onclick="toggle(false)"><span>🌓 Toggle Dark Mode</span><span class="cmd-shortcut">⌘ T</span></li>
+        <li class="cmd-item" onclick="toggle(false)"><span>⚙️ System Settings</span><span class="cmd-shortcut">⌘ ,</span></li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('cmdModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

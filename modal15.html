@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Rating Feedback Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0f172a; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #f59e0b; color: #111; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .modal-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; padding: 32px; max-width: 440px; width: 90%; text-align: center; }
+    h3 { color: #f8fafc; font-size: 1.25rem; margin-bottom: 8px; }
+    p { color: #94a3b8; font-size: 0.88rem; margin-bottom: 20px; }
+    .stars { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; font-size: 32px; cursor: pointer; color: #475569; }
+    .star.active { color: #fbbf24; }
+    textarea { width: 100%; height: 90px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 10px; color: #fff; font-family: inherit; font-size: 0.85rem; resize: none; margin-bottom: 20px; outline: none; }
+    textarea:focus { border-color: #f59e0b; }
+    .btn-submit { width: 100%; padding: 12px; background: #f59e0b; color: #000; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">⭐ Give Feedback</button>
+  <div class="modal-overlay" id="ratingModal">
+    <div class="modal-card">
+      <h3>How was your experience?</h3>
+      <p>Your honest feedback helps us improve our product daily.</p>
+      <div class="stars" id="starContainer">
+        <span class="star" onclick="rate(1)">★</span>
+        <span class="star" onclick="rate(2)">★</span>
+        <span class="star" onclick="rate(3)">★</span>
+        <span class="star" onclick="rate(4)">★</span>
+        <span class="star" onclick="rate(5)">★</span>
+      </div>
+      <textarea placeholder="Tell us what you loved or how we can do better..."></textarea>
+      <button class="btn-submit" onclick="alert('Thank you for your rating!'); toggle(false);">Submit Review</button>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('ratingModal').classList.toggle('active', v); }
+    function rate(n) {
+      const stars = document.querySelectorAll('.star');
+      stars.forEach((s, idx) => s.classList.toggle('active', idx < n));
+    }
+  </script>
+</body>
+</html>

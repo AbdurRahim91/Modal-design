@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Share Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0c0f17; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #ec4899; color: white; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .share-card { background: #171d2b; border: 1px solid #29354d; border-radius: 18px; padding: 30px; width: 90%; max-width: 440px; position: relative; }
+    .close-btn { position: absolute; top: 16px; right: 18px; background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; }
+    h3 { color: #fff; font-size: 1.25rem; margin-bottom: 6px; }
+    p { color: #94a3b8; font-size: 0.85rem; margin-bottom: 20px; }
+    .social-icons { display: flex; justify-content: space-around; margin-bottom: 24px; }
+    .social-pill { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 0.8rem; color: #cbd5e1; cursor: pointer; }
+    .icon-bubble { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; background: #232d42; }
+    .copy-link { display: flex; background: #0b101b; border: 1px solid #2c3a54; border-radius: 8px; padding: 6px 6px 6px 14px; align-items: center; }
+    .copy-link input { flex: 1; background: transparent; border: none; color: #94a3b8; font-size: 0.85rem; outline: none; }
+    .copy-btn { padding: 8px 16px; background: #ec4899; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">🔗 Share Link</button>
+  <div class="modal-overlay" id="shareModal">
+    <div class="share-card">
+      <button class="close-btn" onclick="toggle(false)">&times;</button>
+      <h3>Share this Design</h3>
+      <p>Broadcast this page across your favorite communities</p>
+      <div class="social-icons">
+        <div class="social-pill" onclick="alert('Shared to Twitter/X')"><div class="icon-bubble">𝕏</div><span>Twitter</span></div>
+        <div class="social-pill" onclick="alert('Shared to LinkedIn')"><div class="icon-bubble">💼</div><span>LinkedIn</span></div>
+        <div class="social-pill" onclick="alert('Shared to WhatsApp')"><div class="icon-bubble">💬</div><span>WhatsApp</span></div>
+        <div class="social-pill" onclick="alert('Shared to Telegram')"><div class="icon-bubble">✈️</div><span>Telegram</span></div>
+      </div>
+      <div class="copy-link">
+        <input type="text" value="https://example.com/modals/hub" readonly />
+        <button class="copy-btn" onclick="navigator.clipboard.writeText('https://example.com/modals/hub'); alert('Link copied!');">Copy</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('shareModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

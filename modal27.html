@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invite Team Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0b0f19; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #6366f1; color: white; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .invite-box { background: #161e2e; border: 1px solid #283750; border-radius: 16px; padding: 30px; width: 90%; max-width: 460px; position: relative; }
+    .close-btn { position: absolute; top: 16px; right: 18px; background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; }
+    h3 { color: #f8fafc; font-size: 1.25rem; margin-bottom: 6px; }
+    p { color: #94a3b8; font-size: 0.85rem; margin-bottom: 20px; }
+    .form-row { display: flex; gap: 8px; margin-bottom: 16px; }
+    .form-row input { flex: 1; padding: 10px 14px; background: #0c121d; border: 1px solid #2d3b54; border-radius: 8px; color: white; font-size: 0.9rem; outline: none; }
+    .form-row select { padding: 10px 14px; background: #0c121d; border: 1px solid #2d3b54; border-radius: 8px; color: white; font-size: 0.9rem; outline: none; }
+    .btn-send { width: 100%; padding: 11px; background: #6366f1; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">👥 Invite Member</button>
+  <div class="modal-overlay" id="inviteModal">
+    <div class="invite-box">
+      <button class="close-btn" onclick="toggle(false)">&times;</button>
+      <h3>Invite Team Member</h3>
+      <p>Grant access to your organization repositories and documents.</p>
+      <div class="form-row">
+        <input type="email" placeholder="colleague@domain.com" />
+        <select>
+          <option>Editor</option>
+          <option>Admin</option>
+          <option>Viewer</option>
+        </select>
+      </div>
+      <button class="btn-send" onclick="alert('Invite link sent!'); toggle(false);">Send Invitation</button>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('inviteModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

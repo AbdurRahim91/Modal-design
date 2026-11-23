@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sleek Modal UI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<style>
+    :root {
+  --accent: #00f2fe;
+  --accent-hover: #4facfe;
+  --danger: #ff5f6d;
+  --bg: #1a1a2e;
+  --modal-bg: #fff;
+  --text-dark: #111;
+  --text-muted: #555;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg), #16213e);
+  color: var(--text-dark);
+  font-family: "Inter", sans-serif;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.open-btn {
+  background: var(--accent);
+  color: white;
+  padding: 0.9rem 1.8rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 242, 254, 0.3);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.open-btn:hover {
+  background: var(--accent-hover);
+  transform: scale(1.04);
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(6px);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 999;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal {
+  background: var(--modal-bg);
+  padding: 2rem;
+  width: 90%;
+  max-width: 420px;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+  transform: translateY(30px) scale(0.95);
+  opacity: 0;
+  transition: all 0.35s ease;
+}
+
+.modal-overlay.active .modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.close-btn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: transparent;
+  font-size: 1.6rem;
+  color: var(--text-muted);
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: var(--text-dark);
+}
+
+.modal h2 {
+  margin-bottom: 10px;
+  font-size: 1.6rem;
+}
+
+.modal p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.action-btn {
+  background: var(--danger);
+  color: white;
+  padding: 0.7rem 1.4rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.action-btn:hover {
+  background: #ffc371;
+  color: var(--text-dark);
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 1.5rem;
+  }
+}
+
+</style>
+<body>
+
+  <main>
+    <button id="openModal" class="open-btn" aria-haspopup="dialog">
+      💡 Launch Modal
+    </button>
+  </main>
+
+  <div id="modalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+    <div class="modal" tabindex="-1">
+      <button class="close-btn" id="closeModal" aria-label="Close modal">&times;</button>
+      <h2 id="modalTitle">Let’s Make Magic Happen 🪄</h2>
+      <p id="modalDesc">This is a buttery-smooth modal interface, designed with love and built for interaction.</p>
+      <button class="action-btn">✨ I’m In</button>
+    </div>
+  </div>
+
+  <script>
+    const modalOverlay = document.getElementById("modalOverlay");
+const openBtn = document.getElementById("openModal");
+const closeBtn = document.getElementById("closeModal");
+
+openBtn.addEventListener("click", () => {
+  modalOverlay.classList.add("active");
+  document.querySelector(".modal").focus();
+});
+
+closeBtn.addEventListener("click", () => {
+  modalOverlay.classList.remove("active");
+});
+
+modalOverlay.addEventListener("click", (e) => {
+  if (e.target === modalOverlay) {
+    modalOverlay.classList.remove("active");
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    modalOverlay.classList.remove("active");
+  }
+});
+
+  </script>
+</body>
+</html>

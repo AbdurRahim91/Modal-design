@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GDPR Cookie Consent Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #090d16; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 22px; background: #2563eb; color: #fff; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: flex-end; justify-content: center; z-index: 99; padding-bottom: 24px; }
+    .modal-overlay.active { display: flex; }
+    .cookie-card { background: #1e293b; border: 1px solid #334155; border-radius: 14px; max-width: 580px; width: 90%; padding: 24px 28px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    .cookie-card h4 { color: #f8fafc; font-size: 1.1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .cookie-card p { color: #94a3b8; font-size: 0.85rem; line-height: 1.5; margin-bottom: 18px; }
+    .actions { display: flex; justify-content: flex-end; gap: 10px; flex-wrap: wrap; }
+    .btn-secondary { background: #334155; color: #cbd5e1; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 500; cursor: pointer; }
+    .btn-primary { background: #10b981; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">🍪 Manage Cookies</button>
+  <div class="modal-overlay" id="cookieModal">
+    <div class="cookie-card">
+      <h4>🍪 We Value Your Privacy</h4>
+      <p>We use cookies to enhance your browsing experience, provide personalized content, and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.</p>
+      <div class="actions">
+        <button class="btn-secondary" onclick="toggle(false)">Preferences</button>
+        <button class="btn-secondary" onclick="toggle(false)">Reject Non-Essential</button>
+        <button class="btn-primary" onclick="toggle(false)">Accept All</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('cookieModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

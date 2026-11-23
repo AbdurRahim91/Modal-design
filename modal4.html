@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sleek Modal UI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<style>dialog,
+  dialog::backdrop {
+    opacity: 0;
+  
+    @media (prefers-reduced-motion: no-preference) {
+      transition: display 1s allow-discrete, overlay 1s allow-discrete,
+        opacity 1s ease, transform 1s ease;
+    }
+  }
+  
+  dialog {
+    transform: translateY(30px);
+  }
+  
+  dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  dialog[open] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  dialog[open]::backdrop {
+    opacity: 0.8;
+  }
+  
+  @starting-style {
+    dialog[open],
+    dialog[open]::backdrop {
+      opacity: 0;
+    }
+  
+    dialog[open] {
+      transform: translateY(30px);
+    }
+  }
+  
+  html:has(dialog[open]) {
+    overflow: hidden;
+    scrollbar-gutter: stable;
+  }
+  
+  /* General page styling */
+  :root {
+    --color-pink: rgb(230, 25, 73);
+    --color-purple: rgb(124, 35, 121);
+    --btn-text-color: #ffff;
+    --btn-background: linear-gradient(
+      to right,
+      var(--color-purple) 0,
+      var(--color-pink) 40%,
+      var(--color-pink) 60%,
+      var(--color-purple) 100%
+    );
+    --text-color: #191919;
+    --background-color: #f3f5f7;
+  }
+  
+  @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+  
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  
+  *:is(:focus, :focus-visible) {
+    outline: 2px solid var(--color-pink);
+    outline-offset: 2px;
+  }
+  
+  button {
+    all: unset;
+    color: inherit;
+    font: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+    cursor: pointer;
+    overflow: visible;
+  }
+  
+  body {
+    color: var(--text-color);
+    font-family: "Open Sans", sans-serif;
+    background-color: var(--background-color);
+    line-height: 1.4;
+    height: 100vh;
+    height: 100svh;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    place-items: center;
+  }
+  
+  dialog {
+    border: 0;
+    padding: 1.5rem 2.5rem;
+    border-radius: 1rem;
+    background-color: var(--background-color);
+    width: min(100%, 40em);
+    box-shadow: 0 0 4rem rgba(0, 0, 0, 0.4);
+    transform: translateY(30px);
+  }
+  
+  dialog header {
+    display: flex;
+    align-items: center;
+  }
+  
+  dialog header h2 {
+    margin-block: 0;
+  }
+  
+  dialog header button {
+    margin-inline-start: auto;
+  }
+  
+  dialog menu {
+    text-align: right;
+    margin: 0;
+    padding-inline: 0;
+  }
+  
+  .primary-btn {
+    color: var(--btn-text-color);
+    background: var(--btn-background);
+    background-size: 150% 100%;
+    border: none;
+    padding: 0.8rem 2.5rem;
+    border-radius: 0.5rem;
+    transition-property: color, background, background-position, box-shadow;
+    transition-duration: 200ms;
+  }
+  
+  .primary-btn:is(:hover, :focus-visible) {
+    background-position: 100% 0;
+  }
+  
+  @media screen and (prefers-reduced-motion: no-preference) {
+    :has(:target) {
+      scroll-behavior: smooth;
+    }
+  }
+  /* General page styling */
+  </style>
+<body>
+
+  <main>
+    <button class="primary-btn">Show modal dialog</button>
+  </main>
+  <dialog>
+    <form method="dialog">
+      <header>
+        <h2>Alert</h2>
+        <button type="submit" value="close" aria-label="Close modal dialog" formnovalidate>
+          <span aria-hidden="true">x</span>
+        </button>
+      </header>
+      <section>
+        <p>Your modal dialog content.</p>
+      </section>
+      <menu>
+        <button type="submit" value="close" class="primary-btn" formnovalidate>OK</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script>
+  const dialog = document.querySelector("dialog");
+
+    document
+      .querySelector("main > button")
+      .addEventListener("click", () => dialog.showModal());
+    </script>
+</body>
+</html>

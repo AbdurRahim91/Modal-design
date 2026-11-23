@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Uploader Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #0b0f19; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #3b82f6; color: white; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .upload-card { background: #161f30; border: 1px solid #28354f; border-radius: 16px; padding: 28px; width: 90%; max-width: 480px; text-align: center; }
+    .dropzone { border: 2px dashed #3b82f6; border-radius: 12px; padding: 36px 20px; background: rgba(59, 130, 246, 0.04); cursor: pointer; margin: 20px 0; }
+    .dropzone:hover { background: rgba(59, 130, 246, 0.08); }
+    .dropzone-icon { font-size: 40px; margin-bottom: 12px; }
+    h3 { color: #f3f4f6; font-size: 1.2rem; }
+    p { color: #94a3af; font-size: 0.85rem; }
+    .btn-action { width: 100%; padding: 12px; background: #3b82f6; color: white; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">📁 Upload Assets</button>
+  <div class="modal-overlay" id="uploadModal">
+    <div class="upload-card">
+      <h3>Upload Files</h3>
+      <p>Select and upload media files to your project library</p>
+      <div class="dropzone" onclick="document.getElementById('fileInput').click()">
+        <div class="dropzone-icon">☁️</div>
+        <p style="color: #60a5fa; font-weight: 600; margin-bottom: 4px;">Choose a file or drag & drop it here</p>
+        <span style="font-size: 0.75rem; color: #64748b;">PNG, JPG, PDF up to 25MB</span>
+        <input type="file" id="fileInput" style="display: none;" onchange="alert('File selected: ' + this.files[0].name)" />
+      </div>
+      <button class="btn-action" onclick="toggle(false)">Done</button>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('uploadModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

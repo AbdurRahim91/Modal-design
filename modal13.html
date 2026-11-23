@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discount Promo Popup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background: #111827; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #ef4444; color: white; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4); }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .coupon-card { background: linear-gradient(145deg, #1f2937, #111827); border: 2px dashed #f59e0b; border-radius: 20px; padding: 36px 30px; text-align: center; max-width: 420px; width: 90%; position: relative; color: white; }
+    .badge { background: #f59e0b; color: #111; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 12px; }
+    h2 { font-size: 2.2rem; font-weight: 800; color: #fbbf24; margin-bottom: 4px; }
+    p { color: #9ca3af; font-size: 0.9rem; margin-bottom: 20px; }
+    .code-box { background: #000; border: 1px solid #374151; padding: 12px; border-radius: 10px; display: flex; align-items: center; justify-content: space-between; font-weight: 700; font-family: monospace; font-size: 1.1rem; color: #6ee7b7; margin-bottom: 16px; }
+    .btn-copy { background: #10b981; color: white; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-family: 'Poppins'; font-size: 0.8rem; font-weight: 600; }
+    .close-btn { position: absolute; top: 14px; right: 16px; background: none; border: none; color: #6b7280; font-size: 24px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">🎁 Claim 25% Off</button>
+  <div class="modal-overlay" id="promoModal">
+    <div class="coupon-card">
+      <button class="close-btn" onclick="toggle(false)">&times;</button>
+      <span class="badge">Limited Offer</span>
+      <h2>25% OFF</h2>
+      <p>Use this promo code at checkout on your entire cart today!</p>
+      <div class="code-box">
+        <span id="couponCode">SUMMER25</span>
+        <button class="btn-copy" onclick="copyCode()">Copy Code</button>
+      </div>
+      <div style="font-size: 0.75rem; color: #6b7280;">Expires in 24 hours. Valid for all new orders.</div>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('promoModal').classList.toggle('active', v); }
+    function copyCode() {
+      navigator.clipboard.writeText('SUMMER25');
+      alert('Coupon copied: SUMMER25');
+    }
+  </script>
+</body>
+</html>

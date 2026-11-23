@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Authentication Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #090d16; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #10b981; color: white; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-overlay.active { display: flex; }
+    .auth-box { background: #172033; border: 1px solid #2a3754; border-radius: 18px; padding: 36px 32px; width: 90%; max-width: 420px; position: relative; }
+    .close-btn { position: absolute; top: 16px; right: 18px; background: none; border: none; color: #94a3b8; font-size: 22px; cursor: pointer; }
+    h2 { color: #f8fafc; font-size: 1.4rem; font-weight: 700; margin-bottom: 6px; }
+    .subtitle { color: #94a3b8; font-size: 0.85rem; margin-bottom: 24px; }
+    .social-btn { width: 100%; padding: 10px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 0.88rem; font-weight: 600; cursor: pointer; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .divider { text-align: center; margin: 16px 0; font-size: 0.75rem; color: #64748b; position: relative; }
+    .input-field { width: 100%; padding: 11px 14px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; color: #fff; font-size: 0.9rem; margin-bottom: 12px; outline: none; }
+    .btn-submit { width: 100%; padding: 12px; background: #10b981; color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 0.95rem; cursor: pointer; margin-top: 6px; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">🔐 Sign In</button>
+  <div class="modal-overlay" id="authModal">
+    <div class="auth-box">
+      <button class="close-btn" onclick="toggle(false)">&times;</button>
+      <h2>Welcome back</h2>
+      <p class="subtitle">Please enter your credentials to log in.</p>
+      <button class="social-btn">Continue with Google</button>
+      <button class="social-btn">Continue with GitHub</button>
+      <div class="divider">OR EMAIL</div>
+      <input type="email" class="input-field" placeholder="name@company.com" />
+      <input type="password" class="input-field" placeholder="Password" />
+      <button class="btn-submit" onclick="alert('Logged in!'); toggle(false);">Sign In</button>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('authModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>

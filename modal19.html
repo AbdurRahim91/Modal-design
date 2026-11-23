@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Plan Modal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #090e17; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .btn-open { padding: 12px 24px; background: #8b5cf6; color: white; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+    .modal-overlay.active { display: flex; }
+    .pricing-card { background: #131c2e; border: 1px solid #23324d; border-radius: 20px; padding: 36px 32px; width: 100%; max-width: 760px; position: relative; }
+    .close-btn { position: absolute; top: 16px; right: 20px; background: none; border: none; color: #94a3b8; font-size: 24px; cursor: pointer; }
+    .header-text { text-align: center; margin-bottom: 28px; }
+    .header-text h2 { color: #fff; font-size: 1.6rem; font-weight: 800; margin-bottom: 6px; }
+    .plans-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media(max-width: 600px) { .plans-grid { grid-template-columns: 1fr; } }
+    .plan { background: #0c121f; border: 1px solid #25334e; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; }
+    .plan.featured { border-color: #8b5cf6; background: rgba(139, 92, 246, 0.08); }
+    .plan h4 { color: #fff; font-size: 1.15rem; margin-bottom: 8px; }
+    .price { font-size: 1.8rem; font-weight: 800; color: #a78bfa; margin-bottom: 16px; }
+    .price span { font-size: 0.85rem; font-weight: 500; color: #94a3b8; }
+    .features { list-style: none; margin-bottom: 20px; font-size: 0.85rem; color: #cbd5e1; flex: 1; }
+    .features li { margin-bottom: 8px; }
+    .btn-choose { padding: 10px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; width: 100%; }
+    .btn-choose.primary { background: #8b5cf6; color: white; }
+    .btn-choose.outline { background: #1e293b; color: white; }
+  </style>
+</head>
+<body>
+  <button class="btn-open" onclick="toggle(true)">💎 Upgrade Plan</button>
+  <div class="modal-overlay" id="pricingModal">
+    <div class="pricing-card">
+      <button class="close-btn" onclick="toggle(false)">&times;</button>
+      <div class="header-text">
+        <h2>Choose Your Growth Plan</h2>
+        <p style="color: #94a3b8; font-size: 0.9rem;">Simple transparent pricing that scales with your team.</p>
+      </div>
+      <div class="plans-grid">
+        <div class="plan">
+          <h4>Starter</h4>
+          <div class="price">$19 <span>/ month</span></div>
+          <ul class="features">
+            <li>✓ Up to 5 Active Team Members</li>
+            <li>✓ 10GB Cloud Storage</li>
+            <li>✓ Standard Support</li>
+          </ul>
+          <button class="btn-choose outline" onclick="toggle(false)">Choose Starter</button>
+        </div>
+        <div class="plan featured">
+          <div style="font-size: 0.7rem; color: #c4b5fd; text-transform: uppercase; font-weight: 800; margin-bottom: 4px;">MOST POPULAR</div>
+          <h4>Professional</h4>
+          <div class="price">$49 <span>/ month</span></div>
+          <ul class="features">
+            <li>✓ Unlimited Team Members</li>
+            <li>✓ 200GB Cloud Storage</li>
+            <li>✓ Priority 24/7 Dedicated Support</li>
+            <li>✓ Custom Integrations</li>
+          </ul>
+          <button class="btn-choose primary" onclick="toggle(false)">Get Pro</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function toggle(v) { document.getElementById('pricingModal').classList.toggle('active', v); }
+  </script>
+</body>
+</html>
